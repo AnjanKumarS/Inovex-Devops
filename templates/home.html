@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inovexa - Home</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Hero Section */
+        .home-hero {
+            min-height: 100vh;
+            background: linear-gradient(120deg, #7F53AC 0%, #647DEE 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .home-hero .hero-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .home-hero .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 80px 0 60px 0;
+            width: 100%;
+        }
+
+        .home-hero .home-logo {
+            font-size: 3.2rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            color: #ffd700;
+            text-shadow: 0 2px 12px #2222;
+        }
+
+        .home-hero .home-headline {
+            font-size: 2.8rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .home-hero .home-typewriter {
+            font-size: 1.5rem;
+            font-weight: 600;
+            min-height: 2.2em;
+            margin-bottom: 18px;
+            color: #fff;
+            text-shadow: 0 2px 12px #23243a33;
+        }
+
+        .home-hero .home-cta-btns .btn {
+            font-size: 1.18rem;
+            font-weight: 700;
+            border-radius: 12px;
+            padding: 16px 38px;
+            margin-right: 18px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 18px 2px #7F53AC44;
+            transition: background 0.2s, box-shadow 0.2s;
+            animation: pulseGlow 1.5s infinite alternate;
+        }
+
+        .home-hero .home-cta-btns .btn-primary {
+            background: linear-gradient(90deg, #7F53AC 0%, #647DEE 100%);
+            color: #fff;
+            border: none;
+        }
+
+        .home-hero .home-cta-btns .btn-primary:hover {
+            background: linear-gradient(90deg, #647DEE 0%, #7F53AC 100%);
+        }
+
+        .home-hero .home-cta-btns .btn-outline-light {
+            border: 2px solid #fff;
+            color: #fff;
+            background: transparent;
+        }
+
+        .home-hero .home-cta-btns .btn-outline-light:hover {
+            background: #fff;
+            color: #7F53AC;
+        }
+
+        @keyframes pulseGlow {
+            from {
+                box-shadow: 0 2px 18px 2px #7F53AC44;
+            }
+
+            to {
+                box-shadow: 0 4px 32px 8px #647DEE66;
+            }
+        }
+
+        .home-hero .hero-media {
+            position: relative;
+            z-index: 2;
+            max-width: 520px;
+            margin: 0 auto;
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(127, 83, 172, 0.18);
+        }
+
+        .home-hero .hero-media video,
+        .home-hero .hero-media img {
+            width: 100%;
+            min-height: 320px;
+            object-fit: cover;
+            border-radius: 32px;
+        }
+
+        .home-hero .hero-media .media-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(127, 83, 172, 0.18) 0%, rgba(100, 125, 222, 0.13) 100%);
+            z-index: 2;
+        }
+
+        /* Showcase Section */
+        .home-showcase-section {
+            background: #fff;
+            padding: 64px 0 48px 0;
+            text-align: center;
+        }
+
+        .home-showcase-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #7F53AC;
+            margin-bottom: 32px;
+        }
+
+        .home-showcase-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+        }
+
+        .home-showcase-card {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(127, 83, 172, 0.13);
+            padding: 36px 32px 28px 32px;
+            min-width: 260px;
+            max-width: 340px;
+            flex: 1 1 280px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .home-showcase-card:hover {
+            transform: translateY(-8px) scale(1.04) rotateZ(-1deg);
+            box-shadow: 0 16px 48px rgba(100, 125, 222, 0.18);
+        }
+
+        .home-showcase-card .showcase-icon {
+            font-size: 2.5rem;
+            color: #7F53AC;
+            margin-bottom: 12px;
+        }
+
+        .home-showcase-card .showcase-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.18rem;
+            font-weight: 700;
+            color: #7F53AC;
+            margin-bottom: 10px;
+        }
+
+        .home-showcase-card .showcase-desc {
+            color: #444;
+            font-size: 1.05rem;
+            margin-bottom: 0;
+        }
+
+        /* Why Inovexa Section */
+        .home-why-section {
+            background: linear-gradient(120deg, #f7f9fc 0%, #e9e6f7 100%);
+            padding: 64px 0 48px 0;
+            text-align: center;
+        }
+
+        .home-why-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #7F53AC;
+            margin-bottom: 32px;
+        }
+
+        .home-why-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+        }
+
+        .home-why-card {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(127, 83, 172, 0.13);
+            padding: 36px 32px 28px 32px;
+            min-width: 260px;
+            max-width: 340px;
+            flex: 1 1 280px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        .home-why-card:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 16px 48px rgba(100, 125, 222, 0.18);
+        }
+
+        .home-why-card .why-icon {
+            font-size: 2.2rem;
+            color: #647DEE;
+            margin-bottom: 12px;
+        }
+
+        .home-why-card .why-title-card {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #7F53AC;
+            margin-bottom: 2px;
+        }
+
+        .home-why-card .why-desc {
+            color: #888;
+            font-size: 0.98rem;
+            margin-bottom: 8px;
+        }
+
+        /* Clients Section */
+        .home-clients-section {
+            background: #fff;
+            padding: 48px 0 32px 0;
+            text-align: center;
+        }
+
+        .home-clients-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #7F53AC;
+            margin-bottom: 24px;
+        }
+
+        .home-clients-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .home-clients-logo {
+            width: 120px;
+            height: 48px;
+            background: #f7f9fc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(127, 83, 172, 0.07);
+            font-size: 2rem;
+            color: #647DEE;
+            opacity: 0.7;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .home-clients-logo:hover {
+            opacity: 1;
+            transform: scale(1.08);
+        }
+
+        /* CTA Section */
+        .home-cta-section {
+            background: linear-gradient(90deg, #7F53AC 0%, #647DEE 100%);
+            color: #fff;
+            text-align: center;
+            padding: 64px 0 48px 0;
+        }
+
+        .home-cta-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .home-cta-btn {
+            background: #ffd700;
+            color: #7F53AC;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            padding: 18px 48px;
+            font-size: 1.18rem;
+            box-shadow: 0 2px 18px 2px #7F53AC44;
+            transition: background 0.2s, box-shadow 0.2s;
+            animation: pulseGlow 1.5s infinite alternate;
+        }
+
+        .home-cta-btn:hover {
+            background: #fff;
+            color: #7F53AC;
+        }
+
+        @media (max-width: 900px) {
+
+            .home-showcase-cards,
+            .home-why-cards,
+            .home-clients-logos {
+                flex-direction: column;
+                gap: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3 text-primary" href="/">Inovexa</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav w-100 justify-content-evenly mb-2 mb-lg-0 gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/industries">Industries</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/careers">Careers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin-page"><i
+                                class="fas fa-user-shield me-1"></i>Admin Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="home-hero position-relative">
+        <div class="hero-shapes">
+            <svg width="100%" height="100%" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg"
+                style="position:absolute;top:0;left:0;z-index:0;">
+                <circle cx="200" cy="120" r="90" fill="#ffd70022" />
+                <circle cx="1300" cy="80" r="60" fill="#647DEE33" />
+                <rect x="900" y="200" width="180" height="180" rx="40" fill="#7F53AC22" />
+                <rect x="-60" y="220" width="140" height="140" rx="40" fill="#647DEE22" />
+            </svg>
+        </div>
+        <div class="hero-bg-video-wrapper position-absolute top-0 start-0 w-100 h-100"
+            style="z-index:0;overflow:hidden;">
+            <video autoplay loop muted playsinline class="w-100 h-100 object-fit-cover hero-bg-video"
+                style="min-height:100vh;object-fit:cover;filter:blur(2.5px) brightness(0.7);">
+                    <source src="{{ url_for('static', filename='Images/growth vedio.mp4') }}" type="video/mp4" />
+                </video>
+            <div class="position-absolute top-0 start-0 w-100 h-100"
+                style="background: linear-gradient(120deg, rgba(127,83,172,0.18) 0%, rgba(100,125,222,0.13) 100%);">
+            </div>
+        </div>
+        <div class="container hero-content d-flex flex-column align-items-center justify-content-center"
+            style="min-height:80vh;z-index:2;position:relative;">
+            <div class="home-logo animate__animated animate__fadeInDown">Inovexa</div>
+            <div class="home-headline animate__animated animate__fadeInLeft">Empowering Digital Transformation</div>
+            <div class="home-typewriter animate__animated animate__fadeInUp" id="typewriter"></div>
+            <div class="home-cta-btns mt-4">
+                <a href="/services" class="btn btn-primary animate__animated animate__pulse animate__infinite"><i
+                        class="fas fa-cogs me-2"></i>Our Services</a>
+                <a href="/contact" class="btn btn-outline-light animate__animated animate__fadeInUp"><i
+                        class="fas fa-paper-plane me-2"></i>Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase Section -->
+    <section class="home-showcase-section">
+        <div class="container">
+            <div class="home-showcase-title">Explore Inovexa</div>
+            <div class="home-showcase-cards">
+                <a href="/services" class="home-showcase-card animate__animated animate__fadeInUp">
+                    <div class="showcase-icon"><i class="fas fa-cogs"></i></div>
+                    <div class="showcase-title">Services</div>
+                    <div class="showcase-desc">Discover our full suite of software services, from UI/UX to DevOps and
+                        more.</div>
+                </a>
+                <a href="/industries" class="home-showcase-card animate__animated animate__fadeInUp">
+                    <div class="showcase-icon"><i class="fas fa-industry"></i></div>
+                    <div class="showcase-title">Industries</div>
+                    <div class="showcase-desc">See how we empower Retail, Healthcare, Finance, and more sectors.</div>
+                </a>
+                <a href="/careers" class="home-showcase-card animate__animated animate__fadeInUp">
+                    <div class="showcase-icon"><i class="fas fa-users"></i></div>
+                    <div class="showcase-title">Careers</div>
+                    <div class="showcase-desc">Join our team and shape the future of digital transformation.</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Inovexa Section -->
+    <section class="home-why-section">
+        <div class="container">
+            <div class="home-why-title">Why Inovexa?</div>
+            <div class="home-why-cards">
+                <div class="home-why-card animate__animated animate__fadeInUp">
+                    <div class="why-icon"><i class="fas fa-lightbulb"></i></div>
+                    <div class="why-title-card">Innovation</div>
+                    <div class="why-desc">We deliver cutting-edge solutions that drive business growth and efficiency.
+                    </div>
+                </div>
+                <div class="home-why-card animate__animated animate__fadeInUp">
+                    <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="why-title-card">Trust</div>
+                    <div class="why-desc">Our clients rely on us for secure, scalable, and reliable technology.</div>
+                </div>
+                <div class="home-why-card animate__animated animate__fadeInUp">
+                    <div class="why-icon"><i class="fas fa-users"></i></div>
+                    <div class="why-title-card">Results</div>
+                    <div class="why-desc">We focus on measurable outcomes and long-term partnerships.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="home-clients-section">
+        <div class="container">
+            <div class="home-clients-title">Trusted By</div>
+            <div class="home-clients-logos">
+                <div class="home-clients-logo"><i class="fab fa-aws"></i></div>
+                <div class="home-clients-logo"><i class="fab fa-microsoft"></i></div>
+                <div class="home-clients-logo"><i class="fab fa-google"></i></div>
+                <div class="home-clients-logo"><i class="fab fa-apple"></i></div>
+                <div class="home-clients-logo"><i class="fab fa-ubuntu"></i></div>
+                </div>
+            </div>
+        </section>
+
+    <!-- CTA Section -->
+    <section class="home-cta-section">
+        <div class="container">
+            <div class="home-cta-title">Ready to Build the Future?</div>
+            <a href="/contact" class="home-cta-btn animate__animated animate__pulse animate__infinite"><i
+                    class="fas fa-rocket me-2"></i>Let's Get Started</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-top mt-5 py-3">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Inovexa. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Typewriter effect for hero tagline
+        const typewriterTexts = [
+            'Your trusted partner in software innovation.',
+            'Empowering startups and enterprises to thrive.',
+            'UI/UX, Data Science, DevOps, and more.',
+            'Let’s build something amazing together.'
+        ];
+        let twIndex = 0, twChar = 0, twEl = document.getElementById('typewriter');
+        function typeWriter() {
+            if (!twEl) return;
+            if (twChar < typewriterTexts[twIndex].length) {
+                twEl.innerHTML = typewriterTexts[twIndex].substring(0, twChar + 1) + '<span class="text-warning">|</span>';
+                twChar++;
+                setTimeout(typeWriter, 38);
+            } else {
+                setTimeout(() => {
+                    twChar = 0;
+                    twIndex = (twIndex + 1) % typewriterTexts.length;
+                    typeWriter();
+                }, 1800);
+            }
+        }
+        typeWriter();
+    </script>
+</body>
+
+</html>

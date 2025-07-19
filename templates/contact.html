@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inovexa - Contact Us</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .contact-hero {
+            background: linear-gradient(120deg, #7F53AC 0%, #647DEE 100%);
+            color: #fff;
+            padding: 80px 0 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-hero .contact-hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.32;
+            z-index: 0;
+        }
+
+        .contact-hero .contact-hero-collage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .contact-hero .contact-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-hero .contact-title {
+            font-size: 2.8rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            color: #ffd700;
+            text-shadow: 0 2px 12px #2222;
+        }
+
+        .contact-hero .contact-tagline {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .contact-hero .contact-mission {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 18px auto;
+            opacity: 0.95;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3 text-primary" href="/">Inovexa</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav w-100 justify-content-evenly mb-2 mb-lg-0 gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/industries">Industries</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/careers">Careers</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin-page"><i
+                                class="fas fa-user-shield me-1"></i>Admin Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="contact-hero position-relative">
+        <div class="contact-hero-bg" id="contactHeroBg"></div>
+        <div class="contact-hero-collage" id="contactHeroCollage"></div>
+        <div class="contact-hero-content animate__animated animate__fadeInDown">
+            <div class="contact-title">Contact Us</div>
+            <div class="contact-tagline">Let’s Connect & Collaborate</div>
+            <div class="contact-mission">Have a question, need a consultation, or want to discuss your next big idea?
+                Reach out to Inovexa’s team and we’ll get back to you promptly.</div>
+        </div>
+    </section>
+
+    <main class="bg-light py-5">
+        <div class="container py-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body p-4">
+                            <h2 class="h5 text-primary mb-4"><i class="fas fa-envelope me-2"></i>Send Us a Message</h2>
+                            <form id="contact-form" class="needs-validation" action="/contact/contact" method="POST"
+                                novalidate>
+                                <div class="mb-3">
+                                    <label for="contact-name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="contact-name" name="name" required>
+                                    <div class="invalid-feedback">Please enter your name.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contact-email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="contact-email" name="email" required>
+                                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contact-message" class="form-label">Message</label>
+                                    <textarea class="form-control" id="contact-message" name="message" rows="5"
+                                        required></textarea>
+                                    <div class="invalid-feedback">Please enter your message.</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-top mt-5 py-3">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Inovexa. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Bootstrap form validation
+        (() => {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+        // Collage/overlay background logic (same as Careers)
+        const images = [
+            'UI-UX.jpg',
+            'System-Integration.jpg',
+            'Prod-engg.jpg',
+            'Quality-engg.jpg',
+            'Mob-app-dev.jpg',
+            'Managed-services.jpg',
+            'Ind-LifeScience.jpg',
+            'Ind-Retail.jpg',
+            'Ind-Investment.jpg',
+            'Ind-Healthcare.jpg',
+            'Ind-Insurance.jpg',
+            'Data-science.jpg',
+            'Devops.jpg',
+            'Data-engg.jpg',
+            'Consulting.jpg',
+            'App-maintenance.jpg'
+        ];
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+        const shuffled = shuffle([...images]);
+        const mainImg = shuffled[0];
+        const collageImgs = shuffled.slice(1, 5);
+        // Set main background
+        document.getElementById('contactHeroBg').style.background = `url('/static/Images/${mainImg}') center/cover no-repeat`;
+        document.getElementById('contactHeroBg').style.opacity = '0.32';
+        document.getElementById('contactHeroBg').style.position = 'absolute';
+        document.getElementById('contactHeroBg').style.top = 0;
+        document.getElementById('contactHeroBg').style.left = 0;
+        document.getElementById('contactHeroBg').style.width = '100%';
+        document.getElementById('contactHeroBg').style.height = '100%';
+        document.getElementById('contactHeroBg').style.zIndex = 0;
+        // Add collage overlays
+        const collageDiv = document.getElementById('contactHeroCollage');
+        collageDiv.innerHTML = collageImgs.map((img, i) =>
+            `<img src="/static/Images/${img}" style="position:absolute;top:${10 + i * 10}%;left:${i * 20}%;width:32vw;max-width:340px;opacity:0.13;filter:blur(2.5px) grayscale(0.2);border-radius:18px;transform:rotate(${(i - 2) * 8}deg);">`
+        ).join('');
+    </script>
+</body>
+
+</html>

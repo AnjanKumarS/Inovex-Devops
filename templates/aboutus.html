@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inovexa - About Us</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .about-hero {
+            background: linear-gradient(120deg, #7F53AC 0%, #647DEE 100%);
+            color: #fff;
+            padding: 80px 0 60px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero .about-logo {
+            font-size: 3.2rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            color: #ffd700;
+            text-shadow: 0 2px 12px #2222;
+        }
+
+        .about-hero .about-tagline {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .about-hero .about-mission {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 18px auto;
+            opacity: 0.95;
+        }
+
+        .about-hero .about-hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            opacity: 0.18;
+            z-index: 0;
+        }
+
+        .about-hero .about-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Glassmorphism Cards */
+        .about-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+            margin: 48px 0 32px 0;
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 32px rgba(127, 83, 172, 0.13);
+            border-radius: 18px;
+            padding: 36px 32px 28px 32px;
+            min-width: 280px;
+            max-width: 370px;
+            flex: 1 1 320px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .about-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 16px 48px rgba(100, 125, 222, 0.18);
+        }
+
+        .about-card .about-card-icon {
+            font-size: 2.2rem;
+            color: #7F53AC;
+            margin-bottom: 12px;
+        }
+
+        .about-card .about-card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.18rem;
+            font-weight: 700;
+            color: #7F53AC;
+            margin-bottom: 10px;
+        }
+
+        .about-card ul {
+            text-align: left;
+            margin: 0 auto;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .about-card ul li::before {
+            content: '\2022';
+            color: #647DEE;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        /* Team Section */
+        .about-team-section {
+            margin: 64px 0 48px 0;
+        }
+
+        .about-team-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #7F53AC;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .about-team-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+        }
+
+        .about-team-card {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(127, 83, 172, 0.13);
+            padding: 28px 18px 18px 18px;
+            text-align: center;
+            width: 220px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+
+        .about-team-card:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 16px 48px rgba(100, 125, 222, 0.18);
+        }
+
+        .about-team-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 12px;
+            border: 3px solid #7F53AC33;
+        }
+
+        .about-team-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #7F53AC;
+            margin-bottom: 2px;
+        }
+
+        .about-team-role {
+            color: #888;
+            font-size: 0.98rem;
+            margin-bottom: 8px;
+        }
+
+        /* Timeline */
+        .about-timeline-section {
+            margin: 64px 0 32px 0;
+        }
+
+        .about-timeline-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #7F53AC;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .about-timeline {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+            position: relative;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .about-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, #7F53AC 0%, #647DEE 100%);
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .about-timeline-item {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(127, 83, 172, 0.10);
+            padding: 24px 32px;
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            z-index: 1;
+            text-align: left;
+            animation: fadeInUp 0.7s;
+        }
+
+        .about-timeline-item .about-timeline-year {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #647DEE;
+            margin-bottom: 6px;
+        }
+
+        .about-timeline-item .about-timeline-desc {
+            color: #444;
+            font-size: 1.05rem;
+        }
+
+        /* CTA */
+        .about-cta-section {
+            margin: 64px 0 0 0;
+            text-align: center;
+        }
+
+        .about-cta-btn {
+            background: linear-gradient(90deg, #7F53AC 0%, #647DEE 100%);
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            padding: 18px 48px;
+            font-size: 1.18rem;
+            box-shadow: 0 2px 18px 2px #7F53AC44;
+            transition: background 0.2s, box-shadow 0.2s;
+            animation: pulseGlow 1.5s infinite alternate;
+        }
+
+        .about-cta-btn:hover {
+            background: linear-gradient(90deg, #647DEE 0%, #7F53AC 100%);
+        }
+
+        @keyframes pulseGlow {
+            from {
+                box-shadow: 0 2px 18px 2px #7F53AC44;
+            }
+
+            to {
+                box-shadow: 0 4px 32px 8px #647DEE66;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .about-cards {
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .about-team-grid {
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .about-timeline {
+                gap: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3 text-primary" href="/">Inovexa</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav w-100 justify-content-evenly mb-2 mb-lg-0 gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/industries">Industries</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/careers">Careers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin-page"><i
+                                class="fas fa-user-shield me-1"></i>Admin Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero position-relative">
+        <div class="about-hero-bg"></div>
+        <div class="about-hero-content animate__animated animate__fadeInDown">
+            <div class="about-logo">Inovexa</div>
+            <div class="about-tagline">Empowering Digital Transformation</div>
+            <div class="about-mission">Inovexa is a technology-driven software services company committed to delivering
+                innovative, scalable, and user-centric solutions for modern businesses. Our focus on quality, agility,
+                and long-term client partnerships sets us apart as a trusted force in digital transformation.</div>
+        </div>
+    </section>
+
+    <main class="bg-light py-5">
+        <div class="container py-4">
+            <!-- Vision & Mission Cards -->
+            <div class="about-cards">
+                <div class="about-card animate__animated animate__fadeInUp">
+                    <div class="about-card-icon"><i class="fas fa-bullseye"></i></div>
+                    <div class="about-card-title">Our Vision</div>
+                    <ul>
+                        <li>To be the most trusted partner in digital transformation.</li>
+                        <li>To lead innovation through cutting-edge technology and design.</li>
+                        <li>To build a globally recognized platform that empowers businesses digitally.</li>
+                    </ul>
+                </div>
+                <div class="about-card animate__animated animate__fadeInUp">
+                    <div class="about-card-icon"><i class="fas fa-rocket"></i></div>
+                    <div class="about-card-title">Our Mission</div>
+                    <ul>
+                        <li>To deliver scalable, intelligent, and secure software solutions.</li>
+                        <li>To align technology with real-world business challenges and opportunities.</li>
+                        <li>To drive measurable growth, efficiency, and long-term client success.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Team Section -->
+            <div class="about-team-section">
+                <div class="about-team-title"><i class="fas fa-users me-2"></i>Our Team</div>
+                <div class="about-team-grid">
+                    <div class="about-team-card animate__animated animate__fadeInUp">
+                        <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=400&q=80"
+                            alt="Anjan Kumar S" class="about-team-img">
+                        <div class="about-team-name">Anjan Kumar S</div>
+                        <div class="about-team-role">CEO & Founder</div>
+                    </div>
+                    <div class="about-team-card animate__animated animate__fadeInUp">
+                        <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=400&q=80"
+                            alt="Roshan Ameen" class="about-team-img">
+                        <div class="about-team-name">Roshan Ameen</div>
+                        <div class="about-team-role">Chief Technology Officer</div>
+                    </div>
+                    <div class="about-team-card animate__animated animate__fadeInUp">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80"
+                            alt="Rahul Dev" class="about-team-img">
+                        <div class="about-team-name">Rahul Dev</div>
+                        <div class="about-team-role">Technical Advisor</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Section -->
+            <div class="about-timeline-section">
+                <div class="about-timeline-title"><i class="fas fa-history me-2"></i>Our History</div>
+                <div class="about-timeline">
+                    <div class="about-timeline-item animate__animated animate__fadeInUp">
+                        <div class="about-timeline-year">2023</div>
+                        <div class="about-timeline-desc">Started with the idea of building modular, containerized
+                            microservices for Indian tech startups and SMEs.</div>
+                    </div>
+                    <div class="about-timeline-item animate__animated animate__fadeInUp">
+                        <div class="about-timeline-year">2024</div>
+                        <div class="about-timeline-desc">Developed Inovexa’s core platform offering scalable
+                            frontend/backend service layers with admin and user dashboards.</div>
+                    </div>
+                    <div class="about-timeline-item animate__animated animate__fadeInUp">
+                        <div class="about-timeline-year">2025</div>
+                        <div class="about-timeline-desc">Recognized for empowering cloud-native digital transformations
+                            for early-stage businesses and SaaS product teams.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="about-cta-section">
+                <a href="/contact" class="about-cta-btn animate__animated animate__pulse animate__infinite"><i
+                        class="fas fa-paper-plane me-2"></i>Contact Us</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-top mt-5 py-3">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Inovexa. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

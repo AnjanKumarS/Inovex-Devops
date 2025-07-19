@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inovexa - Industries</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .industries-grid-3d {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 36px;
+            margin-bottom: 48px;
+        }
+
+        .industry-card-3d {
+            background: linear-gradient(135deg, #7F53AC 0%, #647DEE 100%);
+            border-radius: 22px;
+            box-shadow: 0 8px 32px rgba(127, 83, 172, 0.13);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            min-height: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .industry-card-3d:hover {
+            transform: scale(1.04) rotateZ(-1deg);
+            box-shadow: 0 16px 48px rgba(100, 125, 222, 0.18);
+        }
+
+        .industry-card-3d .industry-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-top-left-radius: 22px;
+            border-top-right-radius: 22px;
+            filter: brightness(0.92) contrast(1.08);
+        }
+
+        .industry-card-3d .industry-icon {
+            font-size: 2.3rem;
+            color: #fff;
+            background: rgba(127, 83, 172, 0.85);
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(127, 83, 172, 0.13);
+            position: absolute;
+            left: 22px;
+            top: 120px;
+            z-index: 2;
+            border: 3px solid #fff;
+        }
+
+        .industry-card-3d .card-body {
+            padding: 32px 24px 24px 24px;
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .industry-card-3d .industry-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+            margin-top: 18px;
+            text-shadow: 0 2px 8px rgba(100, 125, 222, 0.13);
+        }
+
+        .industry-card-3d .industry-short {
+            color: #f7f9fc;
+            font-size: 1.05rem;
+            margin-bottom: 0;
+            text-shadow: 0 2px 8px rgba(100, 125, 222, 0.13);
+        }
+
+        /* Full-page Overlay */
+        .industry-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(40, 30, 60, 0.82);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.4s;
+        }
+
+        .industry-overlay.open {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .industry-overlay-content {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 28px;
+            box-shadow: 0 16px 64px rgba(127, 83, 172, 0.22);
+            max-width: 600px;
+            width: 96vw;
+            padding: 48px 32px 32px 32px;
+            position: relative;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeInUp 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .industry-overlay-content .close-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            font-size: 1.3rem;
+            color: #7F53AC;
+            box-shadow: 0 2px 8px rgba(127, 83, 172, 0.13);
+            z-index: 10;
+        }
+
+        .industry-overlay-content .industry-img-lg {
+            width: 100%;
+            max-width: 340px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 32px rgba(127, 83, 172, 0.18);
+        }
+
+        .industry-overlay-content .industry-icon-lg {
+            font-size: 3.2rem;
+            color: #7F53AC;
+            background: #fff;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(127, 83, 172, 0.13);
+            margin: -48px auto 18px auto;
+            border: 4px solid #fff;
+            position: relative;
+            z-index: 2;
+        }
+
+        .industry-overlay-content .industry-title-lg {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: #7F53AC;
+            margin-bottom: 10px;
+            margin-top: 8px;
+        }
+
+        .industry-overlay-content .industry-desc-lg {
+            color: #444;
+            font-size: 1.13rem;
+            margin-bottom: 18px;
+        }
+
+        .industry-overlay-content .industry-list-lg {
+            color: #333;
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+            padding-left: 18px;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .industry-overlay-content .contact-btn-lg {
+            margin-top: 18px;
+            background: linear-gradient(90deg, #7F53AC 0%, #647DEE 100%);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 18px 0;
+            font-size: 1.18rem;
+            font-weight: 700;
+            box-shadow: 0 2px 18px 2px #7F53AC44;
+            width: 100%;
+            max-width: 340px;
+            transition: background 0.2s, box-shadow 0.2s;
+            animation: pulseGlow 1.5s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from {
+                box-shadow: 0 2px 18px 2px #7F53AC44;
+            }
+
+            to {
+                box-shadow: 0 4px 32px 8px #647DEE66;
+            }
+        }
+
+        .industry-overlay-content .contact-btn-lg:hover {
+            background: linear-gradient(90deg, #647DEE 0%, #7F53AC 100%);
+        }
+
+        @media (max-width: 700px) {
+            .industry-overlay-content {
+                padding: 18px 6vw 18px 6vw;
+            }
+
+            .industry-overlay-content .industry-img-lg {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3 text-primary" href="/">Inovexa</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav w-100 justify-content-evenly mb-2 mb-lg-0 gap-lg-2">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/industries">Industries</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/careers">Careers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/admin-page"><i
+                                class="fas fa-user-shield me-1"></i>Admin Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="bg-light py-5">
+        <div class="container py-4">
+            <h1 class="display-5 fw-bold text-center text-primary mb-3">Industries We Serve</h1>
+            <p class="lead text-center mb-5">We provide specialized software solutions across various industries.</p>
+            <div class="industries-grid-3d">
+                <div class="industry-card-3d animate__animated animate__fadeInUp" data-industry="retail">
+                    <img src="{{ url_for('static', filename='Images/Ind-Retail.jpg') }}" class="industry-img"
+                        alt="Retail">
+                    <span class="industry-icon"><i class="fas fa-store"></i></span>
+                    <div class="card-body">
+                        <div class="industry-title">Retail</div>
+                        <div class="industry-short">Enhance customer engagement with omnichannel retail platforms and
+                            smart analytics.</div>
+                    </div>
+                </div>
+                <div class="industry-card-3d animate__animated animate__fadeInUp" data-industry="insurance">
+                    <img src="{{ url_for('static', filename='Images/Ind-Insurance.jpg') }}" class="industry-img"
+                        alt="Insurance">
+                    <span class="industry-icon"><i class="fas fa-shield-alt"></i></span>
+                    <div class="card-body">
+                        <div class="industry-title">Insurance</div>
+                        <div class="industry-short">Automate claims, deliver digital policy management, and harness risk
+                            analytics.</div>
+                    </div>
+                </div>
+                <div class="industry-card-3d animate__animated animate__fadeInUp" data-industry="healthcare">
+                    <img src="{{ url_for('static', filename='Images/Ind-Healthcare.jpg') }}" class="industry-img"
+                        alt="Healthcare">
+                    <span class="industry-icon"><i class="fas fa-heartbeat"></i></span>
+                    <div class="card-body">
+                        <div class="industry-title">Healthcare</div>
+                        <div class="industry-short">Empower providers with EHR, telemedicine, and health analytics.
+                        </div>
+                    </div>
+                </div>
+                <div class="industry-card-3d animate__animated animate__fadeInUp" data-industry="lifescience">
+                    <img src="{{ url_for('static', filename='Images/Ind-LifeScience.jpg') }}" class="industry-img"
+                        alt="Life Sciences">
+                    <span class="industry-icon"><i class="fas fa-dna"></i></span>
+                    <div class="card-body">
+                        <div class="industry-title">Life Sciences</div>
+                        <div class="industry-short">Accelerate R&D, ensure compliance, and leverage big data for
+                            discovery.</div>
+                    </div>
+                </div>
+                <div class="industry-card-3d animate__animated animate__fadeInUp" data-industry="investment">
+                    <img src="{{ url_for('static', filename='Images/Ind-Investment.jpg') }}" class="industry-img"
+                        alt="Investment Banking">
+                    <span class="industry-icon"><i class="fas fa-chart-bar"></i></span>
+                    <div class="card-body">
+                        <div class="industry-title">Investment Banking</div>
+                        <div class="industry-short">Deliver secure trading, automate compliance, and empower clients
+                            with analytics.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Industry Detail Modals (Glassmorphism style) -->
+    <div id="industryModals">
+        <!-- Retail Modal -->
+        <div class="modal fade" id="modal-retail" tabindex="-1" aria-labelledby="modalRetailLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content glass-modal">
+                    <div class="modal-header border-0"
+                        style="background: linear-gradient(90deg, #7F53AC 0%, #647DEE 100%); color: #fff;">
+                        <h5 class="modal-title" id="modalRetailLabel"><i class="fas fa-store me-2"></i>Retail</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex flex-column flex-md-row align-items-center">
+                        <img src="{{ url_for('static', filename='Images/Ind-Retail.jpg') }}"
+                            class="img-fluid rounded mb-3 me-md-4"
+                            style="max-width: 320px; box-shadow: 0 8px 32px rgba(127,83,172,0.18);" alt="Retail">
+                        <div>
+                            <p>Enhance customer engagement with omnichannel retail platforms. Optimize inventory, supply
+                                chain, and in-store operations with smart analytics. Drive sales growth through
+                                personalized shopping experiences and loyalty solutions.</p>
+                            <ul>
+                                <li>Omnichannel Commerce</li>
+                                <li>Smart Inventory Management</li>
+                                <li>Personalized Marketing</li>
+                                <li>Loyalty & Rewards Platforms</li>
+                                <li>Retail Analytics</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-gradient w-100" id="contact-retail">Contact Us</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Insurance Modal -->
+        <div class="modal fade" id="modal-insurance" tabindex="-1" aria-labelledby="modalInsuranceLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content glass-modal">
+                    <div class="modal-header border-0"
+                        style="background: linear-gradient(90deg, #647DEE 0%, #7F53AC 100%); color: #fff;">
+                        <h5 class="modal-title" id="modalInsuranceLabel"><i class="fas fa-shield-alt me-2"></i>Insurance
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex flex-column flex-md-row align-items-center">
+                        <img src="{{ url_for('static', filename='Images/Ind-Insurance.jpg') }}"
+                            class="img-fluid rounded mb-3 me-md-4"
+                            style="max-width: 320px; box-shadow: 0 8px 32px rgba(100,125,222,0.18);" alt="Insurance">
+                        <div>
+                            <p>Automate claims processing and underwriting with AI-driven workflows. Deliver seamless
+                                customer service through digital policy management. Harness data analytics for risk
+                                assessment and fraud prevention.</p>
+                            <ul>
+                                <li>Claims Automation</li>
+                                <li>Digital Policy Management</li>
+                                <li>Risk Analytics</li>
+                                <li>Fraud Detection</li>
+                                <li>Customer Portals</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-gradient w-100" id="contact-insurance">Contact Us</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Healthcare Modal -->
+        <div class="modal fade" id="modal-healthcare" tabindex="-1" aria-labelledby="modalHealthcareLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content glass-modal">
+                    <div class="modal-header border-0"
+                        style="background: linear-gradient(90deg, #7F53AC 0%, #647DEE 100%); color: #fff;">
+                        <h5 class="modal-title" id="modalHealthcareLabel"><i
+                                class="fas fa-heartbeat me-2"></i>Healthcare</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex flex-column flex-md-row align-items-center">
+                        <img src="{{ url_for('static', filename='Images/Ind-Healthcare.jpg') }}"
+                            class="img-fluid rounded mb-3 me-md-4"
+                            style="max-width: 320px; box-shadow: 0 8px 32px rgba(127,83,172,0.18);" alt="Healthcare">
+                        <div>
+                            <p>Empower providers with secure EHR and telemedicine solutions. Streamline patient
+                                management and appointment scheduling. Enable data-driven care with health analytics and
+                                interoperability.</p>
+                            <ul>
+                                <li>Electronic Health Records</li>
+                                <li>Telemedicine Platforms</li>
+                                <li>Patient Portals</li>
+                                <li>Health Analytics</li>
+                                <li>Interoperability Solutions</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-gradient w-100" id="contact-healthcare">Contact Us</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Life Sciences Modal -->
+        <div class="modal fade" id="modal-lifescience" tabindex="-1" aria-labelledby="modalLifescienceLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content glass-modal">
+                    <div class="modal-header border-0"
+                        style="background: linear-gradient(90deg, #647DEE 0%, #7F53AC 100%); color: #fff;">
+                        <h5 class="modal-title" id="modalLifescienceLabel"><i class="fas fa-dna me-2"></i>Life Sciences
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex flex-column flex-md-row align-items-center">
+                        <img src="{{ url_for('static', filename='Images/Ind-LifeScience.jpg') }}"
+                            class="img-fluid rounded mb-3 me-md-4"
+                            style="max-width: 320px; box-shadow: 0 8px 32px rgba(100,125,222,0.18);"
+                            alt="Life Sciences">
+                        <div>
+                            <p>Accelerate R&D with digital lab management and collaboration tools. Ensure regulatory
+                                compliance with automated documentation. Leverage big data for clinical trials and drug
+                                discovery.</p>
+                            <ul>
+                                <li>Lab Management Systems</li>
+                                <li>Regulatory Compliance</li>
+                                <li>Clinical Trial Analytics</li>
+                                <li>Collaboration Platforms</li>
+                                <li>Drug Discovery Solutions</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-gradient w-100" id="contact-lifescience">Contact
+                            Us</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Investment Banking Modal -->
+        <div class="modal fade" id="modal-investment" tabindex="-1" aria-labelledby="modalInvestmentLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content glass-modal">
+                    <div class="modal-header border-0"
+                        style="background: linear-gradient(90deg, #7F53AC 0%, #647DEE 100%); color: #fff;">
+                        <h5 class="modal-title" id="modalInvestmentLabel"><i
+                                class="fas fa-chart-bar me-2"></i>Investment Banking</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex flex-column flex-md-row align-items-center">
+                        <img src="{{ url_for('static', filename='Images/Ind-Investment.jpg') }}"
+                            class="img-fluid rounded mb-3 me-md-4"
+                            style="max-width: 320px; box-shadow: 0 8px 32px rgba(127,83,172,0.18);"
+                            alt="Investment Banking">
+                        <div>
+                            <p>Deliver secure, real-time trading and portfolio management platforms. Automate
+                                compliance, reporting, and risk management workflows. Empower clients with advanced
+                                analytics and digital advisory tools.</p>
+                            <ul>
+                                <li>Trading Platforms</li>
+                                <li>Portfolio Management</li>
+                                <li>Risk & Compliance Automation</li>
+                                <li>Client Analytics</li>
+                                <li>Digital Advisory Tools</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-gradient w-100" id="contact-investment">Contact Us</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-top mt-5 py-3">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Inovexa. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+    <script>
+        // 3D tilt effect
+        VanillaTilt.init(document.querySelectorAll('.industry-card-3d'), {
+            max: 12,
+            speed: 400,
+            glare: true,
+            "max-glare": 0.18
+        });
+        // Industry card click handler (open modal)
+        document.querySelectorAll('.industry-card-3d').forEach(card => {
+            card.addEventListener('click', function () {
+                const industry = this.getAttribute('data-industry');
+                const modal = document.getElementById('modal-' + industry);
+                if (modal) {
+                    const bsModal = new bootstrap.Modal(modal);
+                    bsModal.show();
+                }
+            });
+        });
+        // Contact Us button handler in modals
+        document.querySelectorAll('[id^="contact-"]').forEach(btn => {
+            btn.addEventListener('click', function () {
+                window.location.href = '/contact';
+            });
+        });
+    </script>
+</body>
+
+</html>
