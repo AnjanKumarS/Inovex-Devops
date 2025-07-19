@@ -9,6 +9,9 @@ Inovex is a modular, scalable software platform designed to empower startups and
 - Admin and user dashboards
 - Single SQLite database for all data
 - Easy local development and deployment
+- Dockerized for containerized deployment
+- Kubernetes manifests for orchestration
+- Jenkinsfile for CI/CD automation
 
 ## Navigation Bar & Use Cases
 The website features a consistent navigation bar across all pages, providing quick access to major sections:
@@ -50,6 +53,65 @@ Each link in the navbar is designed to help users quickly navigate to the releva
    ```
 5. **Access the website:**
    Open your browser and go to `http://localhost:5000`
+
+---
+
+## Docker Usage
+
+### Build the Docker Image
+```sh
+cd inovex_app
+# Build the Docker image
+docker build -t inovex-app .
+```
+
+### Run the Docker Container
+```sh
+docker run -p 5000:5000 inovex-app
+```
+
+The app will be available at [http://localhost:5000](http://localhost:5000).
+
+---
+
+## Kubernetes Deployment
+
+Kubernetes manifests are provided in the `k8s/` directory.
+
+### Deploy to Kubernetes
+1. Ensure your Docker image is available to your cluster (push to Docker Hub or load into Minikube).
+2. Apply the manifests:
+   ```sh
+   kubectl apply -f k8s/flask-deployment.yaml
+   kubectl apply -f k8s/flask-service.yaml
+   ```
+3. Check pod status:
+   ```sh
+   kubectl get pods
+   ```
+4. Access the app via the NodePort specified in the service manifest (default: 30007):
+   - For Minikube: `minikube ip` + `:30007`
+   - For Docker Desktop: `localhost:30007`
+
+---
+
+## CI/CD with Jenkins
+
+A `Jenkinsfile` is included for automating build, test, and deployment steps.
+
+### Example Jenkins Pipeline Steps
+- Build Docker image
+- Run tests
+- Push image to registry
+- Deploy to Kubernetes
+
+### To use Jenkins:
+1. Set up a Jenkins server with Docker and Kubernetes plugins.
+2. Configure credentials for your Docker registry and Kubernetes cluster.
+3. Add this repository as a Jenkins project (Pipeline type).
+4. Jenkins will automatically use the `Jenkinsfile` for pipeline steps.
+
+---
 
 ## Team
 - Anjan Kumar S (CEO & Founder)
