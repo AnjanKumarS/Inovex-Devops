@@ -589,3 +589,24 @@ footer {
     padding: 18px 6vw 18px 6vw;
   }
 }
+
+/* Hover effect for Explore Inovexa cards */
+.home-showcase-card,
+.home-why-card {
+    transition: all 0.5s ease;
+}
+
+.home-showcase-card:hover {
+    box-shadow: 0 12px 36px rgba(127, 83, 172, 0.22), 0 2px 18px 2px #7F53AC44;
+    background: linear-gradient(120deg, #f7f9fc 0%, #e9e6f7 100%);
+    border: 1.5px solid #7F53AC33;
+    transform: translateY(-10px) scale(1.05) rotateZ(-1deg);
+}
+
+/* Hover effect for Why Inovexa cards */
+.home-why-card:hover {
+    box-shadow: 0 12px 36px rgba(100, 125, 222, 0.22), 0 2px 18px 2px #647DEE44;
+    background: linear-gradient(120deg, #e9e6f7 0%, #f7f9fc 100%);
+    border: 1.5px solid #647DEE33;
+    transform: translateY(-10px) scale(1.05);
+}

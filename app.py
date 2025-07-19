@@ -28,5 +28,33 @@ app.register_blueprint(contact_bp, url_prefix='/contact')
 def home():
     return render_template('home.html')
 
+@app.route('/about')
+def about():
+    return render_template('aboutus.html')
+
+@app.route('/admin-page')
+def admin_page():
+    return render_template('admin.html')
+
+@app.route('/auth')
+def auth_page():
+    return render_template('auth.html')
+
+@app.route('/careers')
+def careers_page():
+    return render_template('careers.html')
+
+@app.route('/contact')
+def contact_page():
+    return render_template('contact.html')
+
+@app.route('/industries')
+def industries_page():
+    return render_template('industries.html')
+
+@app.route('/services')
+def services_page():
+    return render_template('services.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

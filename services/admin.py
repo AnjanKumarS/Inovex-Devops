@@ -1,6 +1,7 @@
-from flask import Blueprint, request, render_template_string, redirect, url_for, session
+from flask import Blueprint, request, render_template_string, redirect, url_for, session, send_from_directory
 from functools import wraps
 from .models import db, Contact, Application
+import os
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -40,6 +41,11 @@ def admin_logout():
     session.pop("logged_in", None)
     return redirect(url_for("admin.admin_login"))
 
+@admin_bp.route("/uploads/<path:filename>")
+def uploaded_file(filename):
+    uploads_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'uploads'))
+    return send_from_directory(uploads_dir, filename)
+
 @admin_bp.route("/")
 @login_required
 def admin_dashboard():
@@ -76,7 +82,7 @@ def admin_dashboard():
                     <th>Name</th>
                     <th>Email</th>
                     <th>Message</th>
-                    <th>Resume Path</th>
+                    <th>Resume</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,12 +91,18 @@ def admin_dashboard():
                     <td>{{ app.name }}</td>
                     <td>{{ app.email }}</td>
                     <td>{{ app.message }}</td>
-                    <td>{{ app.resume_path }}</td>
+                    <td>
+                        {% if app.resume_path %}
+                            <a href="/admin/uploads/{{ app.resume_path.split('uploads'+os.sep)[-1].lstrip(os.sep).replace('\\','/') }}" target="_blank">View Resume</a>
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-    """, contacts_data=contacts_data, careers_data=careers_data)
+    """, contacts_data=contacts_data, careers_data=careers_data, os=os)
 
 @admin_bp.route("/health")
 def index():
