@@ -7,11 +7,6 @@ pipeline {
         VENV_DIR = "venv"
     }
 
-    options {
-        skipDefaultCheckout()
-        timestamps()
-    }
-
     stages {
         stage('Clean Workspace') {
             steps {
@@ -21,66 +16,58 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/AnjanKumarS/Inovex-Devops.git',
-                        credentialsId: 'github-creds'
-                    ]]
-                ])
+                git url: 'https://github.com/AnjanKumarS/Inovex-Devops.git'
             }
         }
 
         stage('Setup Python Environment') {
-    steps {
-        bat '''
-            python -m venv %VENV_DIR%
-            call %VENV_DIR%\\Scripts\\activate
-            pip install --upgrade pip
-        '''
-    }
-}
+            steps {
+                bat '''
+                    python -m venv %VENV_DIR%
+                    call %VENV_DIR%\\Scripts\\activate
+                    %VENV_DIR%\\Scripts\\python.exe -m pip install --upgrade pip
+                '''
+            }
+        }
 
         stage('Lint Code') {
-    steps {
-        bat '''
-            call %VENV_DIR%\\Scripts\\activate
-            pip install flake8
-            flake8 .
-        '''
-    }
-}
+            steps {
+                bat '''
+                    call %VENV_DIR%\\Scripts\\activate
+                    %VENV_DIR%\\Scripts\\python.exe -m pip install flake8
+                    %VENV_DIR%\\Scripts\\flake8 .
+                '''
+            }
+        }
 
-stage('Run Tests') {
-    steps {
-        bat '''
-            call %VENV_DIR%\\Scripts\\activate
-            pip install pytest
-            pytest tests/
-        '''
-    }
-}
+        stage('Run Tests') {
+            steps {
+                bat '''
+                    call %VENV_DIR%\\Scripts\\activate
+                    %VENV_DIR%\\Scripts\\python.exe -m pip install pytest
+                    %VENV_DIR%\\Scripts\\pytest tests/
+                '''
+            }
+        }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t $IMAGE_NAME:$TAG .'
+                bat "docker build -t %IMAGE_NAME%:%TAG% ."
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl apply -f ./inovex_app/k8s/flask-deployment.yaml'
-                sh 'kubectl apply -f ./inovex_app/k8s/flask-service.yaml'
+                bat '''
+                    kubectl apply -f k8s/flask-deployment.yaml
+                    kubectl apply -f k8s/flask-service.yaml
+                '''
             }
         }
 
         stage('Cleanup Docker') {
-            when {
-                expression { currentBuild.currentResult == 'SUCCESS' }
-            }
             steps {
-                sh 'docker system prune -af'
+                bat 'docker system prune -af'
             }
         }
     }
