@@ -33,34 +33,34 @@ pipeline {
         }
 
         stage('Setup Python Environment') {
-            steps {
-                sh '''
-                    python -m venv $VENV_DIR
-                    . $VENV_DIR/bin/activate
-                    pip install --upgrade pip
-                '''
-            }
-        }
+    steps {
+        bat '''
+            python -m venv %VENV_DIR%
+            call %VENV_DIR%\\Scripts\\activate
+            pip install --upgrade pip
+        '''
+    }
+}
 
         stage('Lint Code') {
-            steps {
-                sh '''
-                    . $VENV_DIR/bin/activate
-                    pip install flake8
-                    flake8 .
-                '''
-            }
-        }
+    steps {
+        bat '''
+            call %VENV_DIR%\\Scripts\\activate
+            pip install flake8
+            flake8 .
+        '''
+    }
+}
 
-        stage('Run Tests') {
-            steps {
-                sh '''
-                    . $VENV_DIR/bin/activate
-                    pip install pytest
-                    pytest tests/
-                '''
-            }
-        }
+stage('Run Tests') {
+    steps {
+        bat '''
+            call %VENV_DIR%\\Scripts\\activate
+            pip install pytest
+            pytest tests/
+        '''
+    }
+}
 
         stage('Build Docker Image') {
             steps {
