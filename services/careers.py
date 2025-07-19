@@ -5,7 +5,8 @@ from .models import db, Application
 
 careers_bp = Blueprint('careers', __name__)
 
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'uploads')
+UPLOAD_FOLDER = os.path.abspath(UPLOAD_FOLDER)
 
 @careers_bp.route('/apply', methods=['POST'])
 def apply():
