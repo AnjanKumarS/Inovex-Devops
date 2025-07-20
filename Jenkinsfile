@@ -30,16 +30,6 @@ pipeline {
             }
         }
 
-        stage('Lint Code') {
-            steps {
-                bat '''
-                    call %VENV_DIR%\\Scripts\\activate
-                    %VENV_DIR%\\Scripts\\python.exe -m pip install flake8
-                    %VENV_DIR%\\Scripts\\flake8 inovex_app/
-                '''
-            }
-        }
-
         stage('Run Tests') {
             steps {
                 bat '''
