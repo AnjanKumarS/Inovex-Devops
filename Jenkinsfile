@@ -51,14 +51,12 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
+    stage('Deploy to Kubernetes') {
     steps {
-        dir('inovex_app') {
-            bat '''
-                kubectl apply -f k8s\\flask-deployment.yaml
-                kubectl apply -f k8s\\flask-service.yaml
-            '''
-        }
+        bat '''
+            kubectl apply -f k8s\\flask-deployment.yaml
+            kubectl apply -f k8s\\flask-service.yaml
+        '''
     }
 }
 
