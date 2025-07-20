@@ -16,17 +16,17 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/AnjanKumarS/Inovex-Devops.git'
+                git branch: 'main', url: 'https://github.com/AnjanKumarS/Inovex-Devops.git'
             }
         }
 
         stage('Setup Python Environment') {
             steps {
-                bat '''
+                bat """
                     python -m venv %VENV_DIR%
                     call %VENV_DIR%\\Scripts\\activate
                     %VENV_DIR%\\Scripts\\python.exe -m pip install --upgrade pip
-                '''
+                """
             }
         }
 
@@ -58,16 +58,16 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                bat '''
-                    kubectl apply -f k8s/flask-deployment.yaml
-                    kubectl apply -f k8s/flask-service.yaml
-                '''
+                bat """
+                    kubectl apply -f inovex_app/k8s/flask-deployment.yaml
+                    kubectl apply -f inovex_app/k8s/flask-service.yaml
+                """
             }
         }
 
         stage('Cleanup Docker') {
             steps {
-                bat 'docker system prune -af'
+                bat "docker system prune -af"
             }
         }
     }
