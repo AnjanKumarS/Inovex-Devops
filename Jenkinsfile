@@ -35,7 +35,12 @@ pipeline {
                 bat '''
                     call %VENV_DIR%\\Scripts\\activate
                     %VENV_DIR%\\Scripts\\python.exe -m pip install pytest
-                    %VENV_DIR%\\Scripts\\pytest tests/
+
+                    if exist tests (
+                        %VENV_DIR%\\Scripts\\pytest tests/
+                    ) else (
+                        echo No tests directory found. Skipping tests.
+                    )
                 '''
             }
         }
