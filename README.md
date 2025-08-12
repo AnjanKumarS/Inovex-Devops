@@ -123,7 +123,7 @@ A `Jenkinsfile` is included for automating build, test, and deployment steps.
 
 ---
 
-**Note:** To run the application, navigate to the inovex_app directory and use the following command:
+To run the application, navigate to the inovex_app directory and use the following command:
 ```sh
 python app.py
 ```
